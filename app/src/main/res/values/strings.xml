@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Instagrom</string>
+    <string name="descriptionHint">Description...</string>
+    <string name="login">Login</string>
+    <string name="usernameHint">Username</string>
+    <string name="passwordhint">Password</string>
+    <string name="camera">Capture Image</string>
+    <string name="submit">Submit</string>
 </resources>
