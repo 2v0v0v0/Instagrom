@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
             goMainActivity();
         }
 
-        binding.loginButtom.setOnClickListener(new View.OnClickListener() {
+        binding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "onClick login button");
@@ -36,15 +36,24 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser(username, password);
             }
         });
+
+        binding.sigupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "onClick sign up button");
+                goSignUpActivity();
+            }
+        });
     }
 
-    private void loginUser(String name, String pass){
+    private void loginUser(String name, String password){
         Log.i(TAG, "Attempting to login user: " + name);
 
-        ParseUser.logInInBackground(name, pass, new LogInCallback() {
+        ParseUser.logInInBackground(name, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
                 if(e != null){
+                    //TODO: better exception outputs
                     Log.e(TAG, "Issue with login", e);
                     return;
                 }
@@ -58,5 +67,10 @@ public class LoginActivity extends AppCompatActivity {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
+    }
+
+    private void goSignUpActivity(){
+        Intent i = new Intent(this, SignUpActivity.class);
+        startActivity(i);
     }
 }
