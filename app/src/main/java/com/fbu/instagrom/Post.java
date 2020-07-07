@@ -1,4 +1,4 @@
-package com.example.instagrom;
+package com.fbu.instagrom;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;

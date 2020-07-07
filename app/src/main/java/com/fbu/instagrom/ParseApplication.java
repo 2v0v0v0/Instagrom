@@ -1,4 +1,4 @@
-package com.example.instagrom;
+package com.fbu.instagrom;
 
 import android.app.Application;
 

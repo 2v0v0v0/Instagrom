@@ -1,71 +1,94 @@
-package com.example.instagrom;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
+package com.fbu.instagrom.fragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.instagrom.databinding.ActivityLoginBinding;
-import com.example.instagrom.databinding.ActivityMainBinding;
-import com.parse.FindCallback;
+
+import com.fbu.instagrom.Post;
+import com.fbu.instagrom.R;
+import com.fbu.instagrom.databinding.FragmentComposeBinding;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-    public static final String TAG = "MainActivity";
+import static android.app.Activity.RESULT_OK;
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class ComposeFragment extends Fragment {
+    public static final String TAG = "ComposeFragment";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 45;
-    private File photoFile;
-    public String photoFileName = "photo.jpg";
     private EditText editTextDescription;
     private ImageView postImage;
+    FragmentComposeBinding binding;
+    private File photoFile;
+    public String photoFileName = "photo.jpg";
 
+    public ComposeFragment() {
+        // Required empty public constructor
+    }
+
+
+    // The onCreateView method is called when Fragment should create its View object hierarchy
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        final ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = FragmentComposeBinding.inflate(getLayoutInflater(), container, false);
+        // layout of fragment is stored in a special property called root
         View view = binding.getRoot();
-        setContentView(view);
-        editTextDescription = findViewById(R.id.descriptionEditText);
-        postImage = findViewById(R.id.postImage);
-//        queryPosts();
-        
+        // binding.
+        return view;
+    }
+
+    // This event is triggered soon after onCreateView().
+    // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        editTextDescription = view.findViewById(R.id.descriptionEditText);
+        postImage = view.findViewById(R.id.postImage);
+
         binding.captureImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 launchCamera();
             }
         });
-        
+
         binding.submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String description = binding.descriptionEditText.getText().toString();
                 //check if description empty
                 if (description.isEmpty()){
-                    Toast.makeText(MainActivity.this, "Description cannot be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 //check if photofile empty
                 if (photoFile == null || postImage.getDrawable() == null){
-                    Toast.makeText(MainActivity.this, "There is no image!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "There is no image!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -73,6 +96,11 @@ public class MainActivity extends AppCompatActivity {
                 savePost(description, currentUser, photoFile);
             }
         });
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     private void launchCamera() {
@@ -84,12 +112,12 @@ public class MainActivity extends AppCompatActivity {
         // wrap File object into a content provider
         // required for API >= 24
         // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
-        Uri fileProvider = FileProvider.getUriForFile(MainActivity.this, "com.example.fileprovider", photoFile);
+        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.example.fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
         // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
         // So as long as the result is not null, it's safe to use the intent.
-        if (intent.resolveActivity(getPackageManager()) != null) {
+        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
             // Start the image capture intent to take photo
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
@@ -100,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         // Get safe storage directory for photos
         // Use `getExternalFilesDir` on Context to access package-specific directories.
         // This way, we don't need to request external read/write runtime permissions.
-        File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
+        File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
 
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
@@ -112,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
@@ -122,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 // Load the taken image into a preview
                 postImage.setImageBitmap(takenImage);
             } else { // Result was a failure
-                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -137,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e!= null){
                     Log.e(TAG, "Error while saving", e);
-                    Toast.makeText(MainActivity.this, "Error while saving!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
                 }
                 Log.i(TAG, "Post save was success!!");
                 editTextDescription.setText("");
@@ -146,21 +174,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void queryPosts() {
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.include(Post.KEY_USER);
-        query.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                if(e != null){
-                    Log.e(TAG, "Issue with getting posts" );
-                    return;
-                }
-
-                for (Post post : posts){
-                    Log.i(TAG,"Post: " +post.getDescription() + ", username: " + post.getUser().getUsername());
-                }
-            }
-        });
-    }
 }

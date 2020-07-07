@@ -1,4 +1,4 @@
-package com.example.instagrom;
+package com.fbu.instagrom;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,9 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.instagrom.databinding.ActivityLoginBinding;
+import com.fbu.instagrom.databinding.ActivityLoginBinding;
 import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
