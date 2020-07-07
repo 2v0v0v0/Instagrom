@@ -49,4 +49,6 @@ dependencies {
 
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
+
 }

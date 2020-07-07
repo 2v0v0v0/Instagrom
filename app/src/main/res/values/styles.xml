@@ -7,4 +7,13 @@
         <item name="colorAccent">@color/jasmine</item>
     </style>
 
+    <style name="timelineText" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="descriptionStyle" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

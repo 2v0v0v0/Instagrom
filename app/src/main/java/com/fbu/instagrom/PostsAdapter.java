@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.fbu.instagrom.models.RelativeTime;
 import com.parse.ParseFile;
 
 import java.util.List;
@@ -46,17 +47,21 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private TextView usernameTextView;
         private ImageView imageIV;
         private TextView descriptionTextView;
+        private TextView timeStampTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             usernameTextView = itemView.findViewById(R.id.usernameTextView);
             imageIV = itemView.findViewById(R.id.imageIV);
             descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
+            timeStampTextView = itemView.findViewById(R.id.timeStampTextView);
         }
 
         public void bind(Post aPost) {
             descriptionTextView.setText(aPost.getDescription());
             usernameTextView.setText(aPost.getUser().getUsername());
+            RelativeTime relativeTime = new RelativeTime();
+            timeStampTextView.setText(relativeTime.getRelativeTimeAgo(aPost.getTime()));
             ParseFile image = aPost.getImage();
             if(image != null){
                 Glide.with(context).load(aPost.getImage().getUrl()).centerCrop().into(imageIV);
