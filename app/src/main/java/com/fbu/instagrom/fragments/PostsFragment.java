@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import java.util.List;
  */
 public class PostsFragment extends Fragment {
     public static final String TAG = "PostsFragment";
+    private SwipeRefreshLayout swipeContainer;
     FragmentPostsBinding binding;
     protected PostsAdapter postsAdapter;
     protected List<Post> allPosts;
@@ -43,6 +45,8 @@ public class PostsFragment extends Fragment {
         // layout of fragment is stored in a special property called root
         View view = binding.getRoot();
         // binding.
+
+        swipeContainer = binding.swipeContainer;
         return view;
     }
 
@@ -63,6 +67,7 @@ public class PostsFragment extends Fragment {
         binding.postsRV.setLayoutManager(new LinearLayoutManager(getContext()));
         queryPosts();
 
+        pullRefresh();
     }
 
     @Override
@@ -91,5 +96,21 @@ public class PostsFragment extends Fragment {
                 postsAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    protected void pullRefresh(){
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                allPosts.clear();
+                queryPosts();
+                Log.i (TAG, "fetching data");
+                swipeContainer.setRefreshing(false);
+            }
+        });
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 }

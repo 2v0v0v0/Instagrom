@@ -19,15 +19,6 @@ import com.parse.ParseUser;
 import java.util.List;
 
 public class ProfileFragment extends PostsFragment {
-    FragmentProfileBinding binding;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        binding = FragmentProfileBinding.inflate(getLayoutInflater(), container, false);
-        View view = binding.getRoot();
-        return view;
-    }
 
     @Override
     protected void queryPosts() {

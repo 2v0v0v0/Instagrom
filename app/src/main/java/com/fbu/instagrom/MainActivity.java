@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        // Set default selection
         binding.bottomNavigation.setSelectedItemId(R.id.action_home);
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
