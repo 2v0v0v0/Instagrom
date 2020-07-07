@@ -28,8 +28,8 @@ import java.util.List;
 public class PostsFragment extends Fragment {
     public static final String TAG = "PostsFragment";
     FragmentPostsBinding binding;
-    private PostsAdapter postsAdapter;
-    private List<Post> allPosts;
+    protected PostsAdapter postsAdapter;
+    protected List<Post> allPosts;
 
     public PostsFragment() {
         // Required empty public constructor
@@ -71,9 +71,11 @@ public class PostsFragment extends Fragment {
         binding = null;
     }
 
-    private void queryPosts() {
+    protected void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
+        query.setLimit(20);
+        query.addDescendingOrder(Post.KEY_CREATEDAT);
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
