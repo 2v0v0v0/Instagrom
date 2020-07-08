@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -13,8 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fbu.instagrom.PostProfileAdapter;
+import com.fbu.instagrom.databinding.FragmentProfileBinding;
 import com.fbu.instagrom.models.Post;
-import com.fbu.instagrom.PostsAdapter;
 import com.fbu.instagrom.databinding.FragmentPostsBinding;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -31,8 +33,8 @@ import java.util.List;
 public class ProfileFragment extends Fragment {
     private static final String TAG = "PostsFragment";
     private SwipeRefreshLayout swipeContainer;
-    FragmentPostsBinding binding;
-    protected PostsAdapter postsAdapter;
+    FragmentProfileBinding binding;
+    protected PostProfileAdapter postProfileAdapter;
     protected List<Post> allPosts;
 
     public ProfileFragment() {
@@ -43,7 +45,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentPostsBinding.inflate(getLayoutInflater(), container, false);
+        binding = FragmentProfileBinding.inflate(getLayoutInflater(), container, false);
         // layout of fragment is stored in a special property called root
         View view = binding.getRoot();
         // binding.
@@ -57,9 +59,9 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         allPosts = new ArrayList<>();
-        postsAdapter = new PostsAdapter(getContext(), allPosts);
-        binding.postsRV.setAdapter(postsAdapter);
-        binding.postsRV.setLayoutManager(new LinearLayoutManager(getContext()));
+        postProfileAdapter = new PostProfileAdapter(getContext(), allPosts);
+        binding.postsRV.setAdapter(postProfileAdapter);
+        binding.postsRV.setLayoutManager(new GridLayoutManager(getContext(), 3));
         queryPosts();
 
         pullRefresh();
@@ -90,7 +92,7 @@ public class ProfileFragment extends Fragment {
                     Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
                 }
                 allPosts.addAll(posts);
-                postsAdapter.notifyDataSetChanged();
+                postProfileAdapter.notifyDataSetChanged();
             }
         });
     }
