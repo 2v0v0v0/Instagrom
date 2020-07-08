@@ -39,7 +39,4 @@ public class PostDetailsActivity extends AppCompatActivity {
             Glide.with(this).load(post.getImage().getUrl()).centerCrop().into(binding.imageIV);
         }
     }
-
-
-
 }
