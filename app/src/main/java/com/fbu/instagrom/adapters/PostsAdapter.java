@@ -1,7 +1,8 @@
-package com.fbu.instagrom;
+package com.fbu.instagrom.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.fbu.instagrom.R;
 import com.fbu.instagrom.activities.PostDetailsActivity;
 import com.fbu.instagrom.models.Post;
 import com.fbu.instagrom.models.RelativeTime;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
@@ -53,6 +56,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private ImageView imageIV;
         private TextView descriptionTextView;
         private TextView timeStampTextView;
+        private ImageView profileImageIV;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,6 +64,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             imageIV = itemView.findViewById(R.id.imageIV);
             descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
             timeStampTextView = itemView.findViewById(R.id.timeStampTextView);
+            profileImageIV = itemView.findViewById(R.id.profileImage);
 
             itemView.setOnClickListener(this);
         }
@@ -72,6 +77,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ParseFile image = aPost.getImage();
             if (image != null) {
                 Glide.with(context).load(aPost.getImage().getUrl()).centerCrop().into(imageIV);
+            }
+
+            ParseFile profileImage = ParseUser.getCurrentUser().getParseFile("profilePic");
+            if (image != null) {
+                Glide.with(context).load(profileImage.getUrl()).centerCrop().circleCrop().into(profileImageIV);
             }
         }
 

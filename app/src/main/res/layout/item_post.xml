@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:paddingBottom="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,21 +15,38 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/profileImage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                tools:srcCompat="@drawable/instagram_user_filled_24"
+                android:layout_margin="5dp"/>
 
             <TextView
                 android:id="@+id/usernameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/timelineText"
+                android:layout_toEndOf="@+id/profileImage"
+                android:paddingStart="10dp"
+                android:layout_centerVertical="true"
                 tools:text="username"></TextView>
 
             <TextView
                 android:id="@+id/timeStampTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/mediaBar"
                 android:textAppearance="@style/timelineText"
                 tools:text="4m"></TextView>
+            <ImageView
+                android:id="@+id/mediaBar"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/media_option_button"/>
         </RelativeLayout>
 
         <ImageView
@@ -35,6 +54,31 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:scaleType="fitXY" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/heartAction"
+                android:layout_margin="8dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ufi_heart"/>
+
+            <ImageView
+                android:id="@+id/commentAction"
+                android:layout_margin="8dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ufi_comment"/>
+
+            <ImageView
+                android:id="@+id/directAction"
+                android:layout_margin="8dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/direct" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/descriptionTextView"

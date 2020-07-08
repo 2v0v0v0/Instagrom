@@ -1,7 +1,6 @@
-package com.fbu.instagrom;
+package com.fbu.instagrom.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.fbu.instagrom.activities.PostDetailsActivity;
+import com.fbu.instagrom.R;
 import com.fbu.instagrom.models.Post;
-import com.fbu.instagrom.models.RelativeTime;
 import com.parse.ParseFile;
-
-import org.parceler.Parcels;
 
 import java.util.List;
 

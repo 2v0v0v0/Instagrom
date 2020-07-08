@@ -13,8 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fbu.instagrom.R;
 import com.fbu.instagrom.models.Post;
-import com.fbu.instagrom.PostsAdapter;
+import com.fbu.instagrom.adapters.PostsAdapter;
 import com.fbu.instagrom.databinding.FragmentPostsBinding;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -109,9 +110,11 @@ public class PostsFragment extends Fragment {
             }
         });
 
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+        swipeContainer.setColorSchemeResources(
+                R.color.princtonOrange,
+                R.color.grape,
+                R.color.iris,
+                R.color.jasmine,
+                R.color.vividCerise);
     }
 }

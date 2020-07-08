@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="Iris">#515BD4</color>
+    <color name="iris">#515BD4</color>
     <color name="grape">#8134AF</color>
     <color name="vividCerise">#DD2A7B</color>
     <color name="jasmine">#FEDA77</color>
-    <color name="PrinctonOrange">#F58529</color>
+    <color name="princtonOrange">#F58529</color>
 
     <color name="pastelGreen">#83D886</color>
     <color name="blue">#59AFD6</color>
