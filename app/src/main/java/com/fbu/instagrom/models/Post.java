@@ -13,7 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 @ParseClassName("Post")
-@Parcel
+@Parcel(analyze = Post.class)
 public class Post extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_IMAGE = "image";

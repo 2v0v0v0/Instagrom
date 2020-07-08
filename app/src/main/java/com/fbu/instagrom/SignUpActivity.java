@@ -28,7 +28,7 @@ import static com.fbu.instagrom.R.string.password_length_error;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final String TAG = "SignUpActivity";
-    private final int PASS_UNMATCH = -1;
+    private static final int PASS_UNMATCH = -1;
     private static final int PASS_INVALID_LENGTH = 1;
     private static final int PASS_VALID = 0;
 
@@ -48,7 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "onClick sign up button");
-                String screenname = binding.fullNameEditText.getText().toString();
+                String screenName = binding.fullNameEditText.getText().toString();
                 String username = binding.usernameEditText.getText().toString();
                 String email = binding.emailEditText.getText().toString();
                 if (!isValidEmail(email) && !email.isEmpty()) {
@@ -58,19 +58,18 @@ public class SignUpActivity extends AppCompatActivity {
                 String password = binding.passwordEditText.getText().toString();
                 String confirmPass = binding.confirmPasswordEditText.getText().toString();
                 switch (isValidPassword(password, confirmPass)) {
-                    case 1: {
+                    case PASS_INVALID_LENGTH: {
                         binding.passwordEditText.setError("Password must be at least 6 characters");
                         binding.confirmPasswordEditText.setError("Password must be at least 6 characters");
-
                         return;
                     }
-                    case -1: {
+                    case PASS_UNMATCH: {
                         binding.passwordEditText.setError("Password unmatched");
                         binding.confirmPasswordEditText.setError("Password unmatched");
                         return;
                     }
                     default: {
-                        signUp(email, screenname, username, password);
+                        signUp(email, screenName, username, password);
                     }
                 }
             }
@@ -86,12 +85,12 @@ public class SignUpActivity extends AppCompatActivity {
 
     private static int isValidPassword(String password, String confirmPass) {
         if (password.length() < 6) {
-            return 1;
+            return PASS_INVALID_LENGTH;
         }
         if (!password.equals(confirmPass)) {
-            return -1;
+            return PASS_UNMATCH;
         }
-        return 0;
+        return PASS_VALID;
     }
 
     private void signUp(String email, String screenname, String username, String password) {
@@ -132,7 +131,6 @@ public class SignUpActivity extends AppCompatActivity {
 
                 goLoginActivity();
                 Toast.makeText(SignUpActivity.this, "Login to your new account!", Toast.LENGTH_LONG).show();
-
             }
         });
     }
