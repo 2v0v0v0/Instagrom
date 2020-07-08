@@ -1,4 +1,4 @@
-package com.fbu.instagrom;
+package com.fbu.instagrom.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

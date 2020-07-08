@@ -1,10 +1,9 @@
-package com.fbu.instagrom;
+package com.fbu.instagrom.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +11,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
+import com.fbu.instagrom.R;
+import com.fbu.instagrom.activities.LoginActivity;
 import com.fbu.instagrom.databinding.ActivityMainBinding;
 import com.fbu.instagrom.fragments.ComposeFragment;
 import com.fbu.instagrom.fragments.PostsFragment;

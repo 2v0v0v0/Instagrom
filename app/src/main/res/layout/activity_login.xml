@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fbu.instagrom.LoginActivity">
+    tools:context="com.fbu.instagrom.activities.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,9 +41,18 @@
             android:backgroundTint="@color/blue"
             android:text="@string/login" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:textSize="16sp"
+            android:text="Don't have an account?"
+            android:gravity="center"/>
+
         <Button
             android:id="@+id/sigupButton"
             style="@style/roundInstaButton"
+            android:layout_marginTop="5dp"
             android:backgroundTint="@color/pastelGreen"
             android:text="@string/signup" />
 

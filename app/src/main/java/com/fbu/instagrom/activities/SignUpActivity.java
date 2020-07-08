@@ -1,4 +1,4 @@
-package com.fbu.instagrom;
+package com.fbu.instagrom.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,20 +11,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.fbu.instagrom.databinding.ActivityLoginBinding;
+import com.fbu.instagrom.R;
 import com.fbu.instagrom.databinding.ActivitySignUpBinding;
-import com.google.android.material.snackbar.Snackbar;
-import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.fbu.instagrom.R.string.password_length_error;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final String TAG = "SignUpActivity";

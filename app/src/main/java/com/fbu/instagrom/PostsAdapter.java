@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.fbu.instagrom.activities.PostDetailsActivity;
 import com.fbu.instagrom.models.Post;
 import com.fbu.instagrom.models.RelativeTime;
 import com.parse.ParseFile;

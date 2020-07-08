@@ -4,7 +4,7 @@
     android:id="@+id/sign-up-layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fbu.instagrom.SignUpActivity">
+    tools:context="com.fbu.instagrom.activities.SignUpActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

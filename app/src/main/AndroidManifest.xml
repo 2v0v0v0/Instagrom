@@ -13,8 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PostDetailsActivity"></activity>
-        <activity android:name=".SignUpActivity" />
+        <activity android:name=".activities.PostDetailsActivity"></activity>
+        <activity android:name=".activities.SignUpActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -26,14 +26,14 @@
                 android:resource="@xml/fileprovider" />
         </provider>
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activities.MainActivity" />
     </application>
 
 </manifest>
