@@ -22,9 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String TAG = "MainActivity";
-
-
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         binding.bottomNavigation.setSelectedItemId(R.id.action_home);
-
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -63,11 +60,12 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_logout, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         ParseUser.logOut();
         ParseUser currentUser = ParseUser.getCurrentUser();
-        Log.i(TAG, currentUser==null? "Log out success" : "Log out fail");
+        Log.i(TAG, currentUser == null ? "Log out success" : "Log out fail");
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
         finish();

@@ -8,28 +8,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="16dp">
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
         <EditText
             android:id="@+id/descriptionEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/descriptionHint" />
+
         <Button
             android:id="@+id/captureImageButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/camera"/>
+            android:text="@string/camera" />
+
         <ImageView
             android:id="@+id/postImage"
             android:layout_width="match_parent"
-            android:layout_height="200dp"/>
+            android:layout_height="200dp" />
+
         <Button
             android:id="@+id/submitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/submit"/>
+            android:text="@string/submit" />
+
     </LinearLayout>
 
 </FrameLayout>

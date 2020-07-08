@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
-import com.fbu.instagrom.Post;
+import com.fbu.instagrom.models.Post;
 import com.fbu.instagrom.R;
 import com.fbu.instagrom.databinding.FragmentComposeBinding;
 import com.parse.ParseException;

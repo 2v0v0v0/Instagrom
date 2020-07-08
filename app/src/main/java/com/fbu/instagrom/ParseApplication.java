@@ -2,6 +2,7 @@ package com.fbu.instagrom;
 
 import android.app.Application;
 
+import com.fbu.instagrom.models.Post;
 import com.parse.Parse;
 import com.parse.ParseObject;
 

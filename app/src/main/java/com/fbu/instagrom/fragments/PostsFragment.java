@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fbu.instagrom.Post;
+import com.fbu.instagrom.models.Post;
 import com.fbu.instagrom.PostsAdapter;
 import com.fbu.instagrom.databinding.FragmentPostsBinding;
 import com.parse.FindCallback;
@@ -84,13 +84,13 @@ public class PostsFragment extends Fragment {
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
-                if(e != null){
-                    Log.e(TAG, "Issue with getting posts" );
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts");
                     return;
                 }
 
-                for (Post post : posts){
-                    Log.i(TAG,"Post: " +post.getDescription() + ", username: " + post.getUser().getUsername());
+                for (Post post : posts) {
+                    Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
                 }
                 allPosts.addAll(posts);
                 postsAdapter.notifyDataSetChanged();
@@ -98,13 +98,13 @@ public class PostsFragment extends Fragment {
         });
     }
 
-    protected void pullRefresh(){
+    protected void pullRefresh() {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 allPosts.clear();
                 queryPosts();
-                Log.i (TAG, "fetching data");
+                Log.i(TAG, "fetching data");
                 swipeContainer.setRefreshing(false);
             }
         });

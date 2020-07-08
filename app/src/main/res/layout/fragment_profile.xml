@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment">
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/postsRV"
-        android:padding="8dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:padding="8dp" />
+
 </FrameLayout>

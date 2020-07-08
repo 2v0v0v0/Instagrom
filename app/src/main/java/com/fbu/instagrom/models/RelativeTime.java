@@ -1,14 +1,8 @@
 package com.fbu.instagrom.models;
 
-
-import android.text.format.DateUtils;
-
-import org.ocpsoft.prettytime.PrettyTime;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -18,10 +12,7 @@ public class RelativeTime {
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
 
-    public RelativeTime() {
-    }
-
-    public String getTimeString(Date date){
+    public String getTimeString(Date date) {
         DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss ZZZZZ yyyy");
         String strDate = dateFormat.format(date);
         return strDate;

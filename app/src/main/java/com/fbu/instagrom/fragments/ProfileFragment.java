@@ -1,16 +1,9 @@
 package com.fbu.instagrom.fragments;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 
-import com.fbu.instagrom.Post;
-import com.fbu.instagrom.databinding.FragmentComposeBinding;
-import com.fbu.instagrom.databinding.FragmentProfileBinding;
+import com.fbu.instagrom.models.Post;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;

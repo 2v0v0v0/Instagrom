@@ -28,9 +28,9 @@ import static com.fbu.instagrom.R.string.password_length_error;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final String TAG = "SignUpActivity";
-    protected static final int PASS_UNMATCH = -1;
-    protected static final int PASS_INVALID_LENGTH = 1;
-    protected static final int PASS_VALID = 0;
+    private final int PASS_UNMATCH = -1;
+    private static final int PASS_INVALID_LENGTH = 1;
+    private static final int PASS_VALID = 0;
 
     private static EditText usernameEditText;
     private static EditText emailEditText;
@@ -51,13 +51,13 @@ public class SignUpActivity extends AppCompatActivity {
                 String screenname = binding.fullNameEditText.getText().toString();
                 String username = binding.usernameEditText.getText().toString();
                 String email = binding.emailEditText.getText().toString();
-                if(!isValidEmail(email) && !email.isEmpty()){
+                if (!isValidEmail(email) && !email.isEmpty()) {
                     binding.emailEditText.setError("Invalid email");
                     return;
                 }
                 String password = binding.passwordEditText.getText().toString();
                 String confirmPass = binding.confirmPasswordEditText.getText().toString();
-                switch (isValidPassword(password, confirmPass)){
+                switch (isValidPassword(password, confirmPass)) {
                     case 1: {
                         binding.passwordEditText.setError("Password must be at least 6 characters");
                         binding.confirmPasswordEditText.setError("Password must be at least 6 characters");
@@ -70,58 +70,53 @@ public class SignUpActivity extends AppCompatActivity {
                         return;
                     }
                     default: {
-                        signUp(email,screenname, username, password);
+                        signUp(email, screenname, username, password);
                     }
                 }
-
-
-
             }
         });
     }
 
-
     private static boolean isValidEmail(CharSequence target) {
-        if(target == null){
+        if (target == null) {
             return true;
         }
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 
-    private static int isValidPassword(String password, String confirmPass){
-        if (password.length()<6){
+    private static int isValidPassword(String password, String confirmPass) {
+        if (password.length() < 6) {
             return 1;
         }
-        if(!password.equals(confirmPass)){
+        if (!password.equals(confirmPass)) {
             return -1;
         }
         return 0;
     }
 
-    private void signUp(String email, String screenname, String username, String password){
+    private void signUp(String email, String screenname, String username, String password) {
         ParseUser user = new ParseUser();
         user.setUsername(username);
         user.setPassword(password);
-        if (email.isEmpty()){
+        if (email.isEmpty()) {
             email = null;
         }
-        if(email != null){
+        if (email != null) {
             user.setEmail(email);
         }
-
-        if (screenname != null){
+        if (screenname != null) {
             user.put("screenName", screenname);
         }
 
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
-                    Log.i(TAG,"Sign up successful" );
+                    Log.i(TAG, "Sign up successful");
                 } else {
 
                     switch (e.getCode()) {
                         case ParseException.USERNAME_TAKEN: {
-                            usernameEditText.setError("Username already exist" );
+                            usernameEditText.setError("Username already exist");
                             break;
                         }
                         case ParseException.EMAIL_TAKEN: {
@@ -136,14 +131,13 @@ public class SignUpActivity extends AppCompatActivity {
                 }
 
                 goLoginActivity();
-                Toast.makeText(SignUpActivity.this,"Login to your new account!",Toast.LENGTH_LONG).show();
+                Toast.makeText(SignUpActivity.this, "Login to your new account!", Toast.LENGTH_LONG).show();
 
             }
         });
     }
 
-
-    private void goLoginActivity(){
+    private void goLoginActivity() {
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
         finish();
