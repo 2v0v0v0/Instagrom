@@ -25,56 +25,38 @@
 
         <EditText
             android:id="@+id/emailEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
             android:hint="Email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            style="@style/editTextBox" />
 
         <EditText
             android:id="@+id/fullNameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
             android:hint="Full Name"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            style="@style/editTextBox" />
 
         <EditText
             android:id="@+id/usernameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
             android:hint="Username (Required)"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            style="@style/editTextBox" />
 
         <EditText
             android:id="@+id/passwordEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
             android:hint="Password (Required)"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            style="@style/editTextBox" />
 
         <EditText
             android:id="@+id/confirmPasswordEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
             android:hint="Confirm Password (Required)"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            style="@style/editTextBox" />
 
         <Button
             android:id="@+id/sigupButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_weight=".5"
-            android:background="@color/pastelGreen"
+            style="@style/roundInstaButton"
+            android:backgroundTint="@color/pastelGreen"
             android:text="@string/signup" />
 
     </LinearLayout>

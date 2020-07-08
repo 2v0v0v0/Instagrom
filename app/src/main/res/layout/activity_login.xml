@@ -25,45 +25,25 @@
 
         <EditText
             android:id="@+id/usernameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:padding="12dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/edittext_roundcorners"
             android:hint="Username"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            style="@style/editTextBox" />
 
         <EditText
             android:id="@+id/passwordEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="12dp"
-            android:layout_marginTop="10dp"
-            android:ems="10"
-            android:background="@drawable/edittext_roundcorners"
             android:hint="Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            style="@style/editTextBox" />
 
         <Button
             android:id="@+id/loginButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_weight=".5"
-            android:background="@drawable/rounded_corners"
+            style="@style/roundInstaButton"
             android:backgroundTint="@color/blue"
             android:text="@string/login" />
 
         <Button
             android:id="@+id/sigupButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_weight=".5"
-            android:background="@drawable/rounded_corners"
+            style="@style/roundInstaButton"
             android:backgroundTint="@color/pastelGreen"
             android:text="@string/signup" />
 
