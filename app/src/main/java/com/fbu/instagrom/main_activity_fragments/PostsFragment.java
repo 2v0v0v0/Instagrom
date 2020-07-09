@@ -6,13 +6,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.fbu.instagrom.EndlessRecyclerViewScrollListener;
 import com.fbu.instagrom.R;
 import com.fbu.instagrom.models.Post;
 import com.fbu.instagrom.adapters.PostsAdapter;
@@ -33,6 +36,8 @@ public class PostsFragment extends Fragment {
     FragmentPostsBinding binding;
     protected PostsAdapter postsAdapter;
     protected List<Post> allPosts;
+    private LinearLayoutManager layoutManager;
+    private EndlessRecyclerViewScrollListener scrollListener;
 
     public PostsFragment() {
         // Required empty public constructor
@@ -44,7 +49,6 @@ public class PostsFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentPostsBinding.inflate(getLayoutInflater(), container, false);
         View view = binding.getRoot();
-
         swipeContainer = binding.swipeContainer;
         return view;
     }
@@ -56,38 +60,19 @@ public class PostsFragment extends Fragment {
         allPosts = new ArrayList<>();
         postsAdapter = new PostsAdapter(getContext(), allPosts);
         binding.postsRV.setAdapter(postsAdapter);
-        binding.postsRV.setLayoutManager(new LinearLayoutManager(getContext()));
+        layoutManager = new LinearLayoutManager(getContext());
+        binding.postsRV.setLayoutManager(layoutManager);
 
         queryPosts();
+        infiniteScroll();
         pullRefresh();
     }
+
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    protected void queryPosts() {
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.include(Post.KEY_USER);
-        query.setLimit(20);
-        query.addDescendingOrder(Post.KEY_CREATEDAT);
-        query.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting posts");
-                    return;
-                }
-
-                for (Post post : posts) {
-                    Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
-                }
-                allPosts.addAll(posts);
-                postsAdapter.notifyDataSetChanged();
-            }
-        });
     }
 
     protected void pullRefresh() {
@@ -108,4 +93,61 @@ public class PostsFragment extends Fragment {
                 R.color.jasmine,
                 R.color.vividCerise);
     }
+
+    protected void queryPosts() {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        query.setLimit(5);
+        query.addDescendingOrder(Post.KEY_CREATEDAT);
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts");
+                    return;
+                }
+
+                for (Post post : posts) {
+                    Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
+                }
+                allPosts.addAll(posts);
+                postsAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    private void loadMoreData() {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.whereLessThan(Post.KEY_CREATEDAT,allPosts.get(allPosts.size()-1).getCreatedAt());
+        query.include(Post.KEY_USER);
+        query.setLimit(5);
+        query.addDescendingOrder(Post.KEY_CREATEDAT);
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts");
+                    return;
+                }
+
+                for (Post post : posts) {
+                    Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
+                }
+                allPosts.addAll(posts);
+                postsAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    public void infiniteScroll(){
+        scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.i(TAG, "onLoadMore: " + page);
+                loadMoreData();
+            }
+        };
+        binding.postsRV.addOnScrollListener(scrollListener);
+    }
+
 }
