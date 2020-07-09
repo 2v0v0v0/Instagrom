@@ -43,10 +43,12 @@ public class OtherUserProfileActivity extends AppCompatActivity {
             binding.setProfilePicButton.setVisibility(View.GONE);
         }
         Log.i(TAG, "current user" + ParseUser.getCurrentUser().getUsername());
+
         userPosts = new ArrayList<>();
         postProfileAdapter = new PostProfileAdapter(this, userPosts);
         binding.postsRV.setAdapter(postProfileAdapter);
         binding.postsRV.setLayoutManager(new GridLayoutManager(this, 3));
+
         try {
             if (user.getString("screenName") == null || user.getString("screenName").trim().equals("")) {
                 binding.textViewScreenName.setText(user.getUsername());

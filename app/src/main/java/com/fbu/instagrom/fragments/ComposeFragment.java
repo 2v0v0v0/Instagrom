@@ -3,7 +3,9 @@ package com.fbu.instagrom.fragments;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,6 +33,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
+import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -39,7 +42,8 @@ import static android.app.Activity.RESULT_OK;
  */
 public class ComposeFragment extends Fragment {
     public static final String TAG = "ComposeFragment";
-    public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 45;
+    public static final int CAMERA_REQUEST_CODE = 45;
+    public final static int GALLERY_REQUEST_CODE = 1046;
     private EditText editTextDescription;
     private ImageView postImage;
     FragmentComposeBinding binding;
@@ -77,6 +81,13 @@ public class ComposeFragment extends Fragment {
             }
         });
 
+        binding.galleryImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onPickPhoto(view);
+            }
+        });
+
         binding.submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,6 +107,7 @@ public class ComposeFragment extends Fragment {
                 savePost(description, currentUser, photoFile);
             }
         });
+
     }
 
     @Override public void onDestroyView() {
@@ -119,8 +131,37 @@ public class ComposeFragment extends Fragment {
         // So as long as the result is not null, it's safe to use the intent.
         if (intent.resolveActivity(getContext().getPackageManager()) != null) {
             // Start the image capture intent to take photo
-            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+            startActivityForResult(intent, CAMERA_REQUEST_CODE);
         }
+    }
+
+    public void onPickPhoto(View view) {
+        // Create intent for picking a photo from the gallery
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        photoFile = getPhotoFileUri(photoFileName);
+
+        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY_REQUEST_CODE);
+        }
+    }
+
+    public Bitmap loadFromUri(Uri photoUri) {
+        Bitmap image = null;
+        try {
+            // check version of Android on device
+            if(Build.VERSION.SDK_INT > 27){
+                // on newer versions of Android, use the new decodeBitmap method
+                ImageDecoder.Source source = ImageDecoder.createSource(getContext().getContentResolver(), photoUri);
+                image = ImageDecoder.decodeBitmap(source);
+            } else {
+                // support older versions of Android by using getBitmap
+                image = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), photoUri);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
     }
 
     // Returns the File for a photo stored on disk given the fileName
@@ -142,7 +183,7 @@ public class ComposeFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == CAMERA_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
@@ -152,6 +193,16 @@ public class ComposeFragment extends Fragment {
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
+        }
+
+        if ((data != null) && requestCode == GALLERY_REQUEST_CODE) {
+            Uri photoUri = data.getData();
+            // Load the image located at photoUri into selectedImage
+            Bitmap selectedImage = loadFromUri(photoUri);
+            // Load the selected image into a preview
+            postImage.setImageBitmap(selectedImage);
+        }else { // Result was a failure
+            Toast.makeText(getContext(), "Picture wasn't selected!", Toast.LENGTH_SHORT).show();
         }
     }
 
