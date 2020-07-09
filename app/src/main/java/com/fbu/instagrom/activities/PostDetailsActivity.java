@@ -2,6 +2,7 @@ package com.fbu.instagrom.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -52,5 +53,26 @@ public class PostDetailsActivity extends AppCompatActivity {
         }else {
             Glide.with(this).load(R.drawable.placeholder).centerCrop().circleCrop().into(binding.profileImage);
         }
+
+        binding.usernameTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToClickedProfile();
+            }
+        });
+
+        binding.profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToClickedProfile();
+            }
+        });
+    }
+
+    private void goToClickedProfile() {
+        ParseUser user = post.getUser();
+        Intent intent = new Intent(this, OtherUserProfileActivity.class);
+        intent.putExtra("clickedOnProfile", Parcels.wrap(user));
+        startActivity(intent);
     }
 }

@@ -39,10 +39,10 @@ public class ProfileFragment extends Fragment {
     private PostProfileAdapter postProfileAdapter;
     private List<Post> allPosts;
     private ParseUser user = ParseUser.getCurrentUser();
+
     public ProfileFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,8 +75,6 @@ public class ProfileFragment extends Fragment {
         if (image != null) {
             Glide.with(getContext()).load(image.getUrl()).centerCrop().circleCrop().into(binding.profileImage);
         }
-
-
 
         queryPosts();
         pullRefresh();

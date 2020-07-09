@@ -11,8 +11,6 @@ import com.bumptech.glide.Glide;
 import com.fbu.instagrom.R;
 import com.fbu.instagrom.adapters.PostProfileAdapter;
 import com.fbu.instagrom.databinding.ActivityOtherUserProfileBinding;
-import com.fbu.instagrom.databinding.FragmentProfileBinding;
-import com.fbu.instagrom.databinding.ItemPostBinding;
 import com.fbu.instagrom.models.Post;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -41,6 +39,10 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         user = (ParseUser) Parcels.unwrap(getIntent().getParcelableExtra("clickedOnProfile"));
         Log.i(TAG, String.format("Showing details for '%s'", user.getUsername() + " " + user.getObjectId()));
 
+        if(!ParseUser.getCurrentUser().getUsername().equals(user.getUsername())){
+            binding.setProfilePicButton.setVisibility(View.GONE);
+        }
+        Log.i(TAG, "current user" + ParseUser.getCurrentUser().getUsername());
         userPosts = new ArrayList<>();
         postProfileAdapter = new PostProfileAdapter(this, userPosts);
         binding.postsRV.setAdapter(postProfileAdapter);
@@ -64,7 +66,6 @@ public class OtherUserProfileActivity extends AppCompatActivity {
             Log.d(TAG, "Error: " + e);
         }
     }
-
 
     private void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
