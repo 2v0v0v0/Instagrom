@@ -57,6 +57,8 @@ public class PostProfileAdapter extends RecyclerView.Adapter<PostProfileAdapter.
             ParseFile image = aPost.getImage();
             if (image != null) {
                 Glide.with(context).load(aPost.getImage().getUrl()).centerCrop().into(imageIV);
+            }else {
+                Glide.with(context).load(R.drawable.placeholder).centerCrop().into(imageIV);
             }
         }
     }

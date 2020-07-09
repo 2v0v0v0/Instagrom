@@ -1,5 +1,6 @@
 package com.fbu.instagrom.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -8,13 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.fbu.instagrom.R;
+import com.fbu.instagrom.activities.MainActivity;
+import com.fbu.instagrom.activities.OtherUserProfileActivity;
 import com.fbu.instagrom.activities.PostDetailsActivity;
+import com.fbu.instagrom.fragments.ProfileFragment;
 import com.fbu.instagrom.models.Post;
 import com.fbu.instagrom.models.RelativeTime;
 import com.parse.ParseFile;
@@ -27,6 +32,7 @@ import java.util.List;
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
     private Context context;
     private List<Post> listPosts;
+    public int REQUEST_CODE = 1002;
 
     public PostsAdapter(Context context, List<Post> listPosts) {
         this.context = context;
@@ -77,12 +83,18 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ParseFile image = aPost.getImage();
             if (image != null) {
                 Glide.with(context).load(aPost.getImage().getUrl()).centerCrop().into(imageIV);
+            } else {
+                Glide.with(context).load(R.drawable.placeholder).centerCrop().into(imageIV);
             }
 
             ParseFile profileImage = ParseUser.getCurrentUser().getParseFile("profilePic");
             if (image != null) {
                 Glide.with(context).load(profileImage.getUrl()).centerCrop().circleCrop().into(profileImageIV);
+            } else {
+                Glide.with(context).load(R.drawable.placeholder).centerCrop().circleCrop().into(profileImageIV);
             }
+
+            setOnClickProfile();
         }
 
         @Override
@@ -95,6 +107,33 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 context.startActivity(intent);
             }
         }
+
+        private void setOnClickProfile() {
+            profileImageIV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    goToClickedProfile(position);
+                }
+            });
+
+            usernameTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    goToClickedProfile(position);
+                }
+            });
+        }
+
+        private void goToClickedProfile(int position) {
+            Post post = listPosts.get(position);
+            ParseUser user = post.getUser();
+            Intent intent = new Intent(context, OtherUserProfileActivity.class);
+            intent.putExtra("clickedOnProfile", Parcels.wrap(user));
+            context.startActivity(intent);
+        }
+
     }
 
     public void clear() {

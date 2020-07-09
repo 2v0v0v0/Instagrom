@@ -73,7 +73,6 @@ public class ProfileFragment extends Fragment {
 
         ParseFile image = user.getParseFile("profilePic");
         if (image != null) {
-            Log.d(TAG, user.getParseFile("profilePic").getUrl());
             Glide.with(getContext()).load(image.getUrl()).centerCrop().circleCrop().into(binding.profileImage);
         }
 
@@ -88,7 +87,6 @@ public class ProfileFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
 
     private void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);

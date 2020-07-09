@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.PostDetailsActivity"></activity>
+        <activity android:name=".activities.OtherUserProfileActivity"></activity>
+        <activity android:name=".activities.PostDetailsActivity" />
         <activity android:name=".activities.SignUpActivity" />
 
         <provider
