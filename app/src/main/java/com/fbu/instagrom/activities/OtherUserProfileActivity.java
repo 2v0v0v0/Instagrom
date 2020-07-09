@@ -61,7 +61,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
             if (image != null) {
                 Glide.with(this).load(image.getUrl()).centerCrop().circleCrop().into(binding.profileImage);
             } else {
-                Glide.with(this).load(R.drawable.placeholder).centerCrop().into(binding.profileImage);
+                Glide.with(this).load(R.drawable.placeholder).circleCrop().into(binding.profileImage);
             }
             queryPosts();
         } catch (Exception e) {

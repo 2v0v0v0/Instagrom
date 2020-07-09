@@ -40,10 +40,11 @@ import static android.app.Activity.RESULT_OK;
 /**
  * A simple {@link Fragment} subclass.
  */
+//TODO: implement gallery function
 public class ComposeFragment extends Fragment {
     public static final String TAG = "ComposeFragment";
     public static final int CAMERA_REQUEST_CODE = 45;
-    public final static int GALLERY_REQUEST_CODE = 1046;
+    public final static int GALLERY_REQUEST_CODE = 46;
     private EditText editTextDescription;
     private ImageView postImage;
     FragmentComposeBinding binding;
@@ -84,7 +85,8 @@ public class ComposeFragment extends Fragment {
         binding.galleryImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onPickPhoto(view);
+                Toast.makeText(getContext(), "Gallery coming soon", Toast.LENGTH_SHORT).show();
+                //onPickPhoto(view);
             }
         });
 
@@ -135,11 +137,10 @@ public class ComposeFragment extends Fragment {
         }
     }
 
-    public void onPickPhoto(View view) {
+    /*public void onPickPhoto(View view) {
         // Create intent for picking a photo from the gallery
         Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        photoFile = getPhotoFileUri(photoFileName);
 
         if (intent.resolveActivity(getContext().getPackageManager()) != null) {
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY_REQUEST_CODE);
@@ -162,7 +163,7 @@ public class ComposeFragment extends Fragment {
             e.printStackTrace();
         }
         return image;
-    }
+    }*/
 
     // Returns the File for a photo stored on disk given the fileName
     public File getPhotoFileUri(String fileName) {
@@ -195,15 +196,16 @@ public class ComposeFragment extends Fragment {
             }
         }
 
-        if ((data != null) && requestCode == GALLERY_REQUEST_CODE) {
+        /*if ((data != null) && requestCode == GALLERY_REQUEST_CODE) {
             Uri photoUri = data.getData();
+            photoFile= new File(photoUri.getPath());
             // Load the image located at photoUri into selectedImage
             Bitmap selectedImage = loadFromUri(photoUri);
             // Load the selected image into a preview
             postImage.setImageBitmap(selectedImage);
         }else { // Result was a failure
             Toast.makeText(getContext(), "Picture wasn't selected!", Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
 
     private void savePost(String description, ParseUser currentUser, File photoFile) {

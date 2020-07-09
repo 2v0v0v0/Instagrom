@@ -47,8 +47,8 @@ public class PostDetailsActivity extends AppCompatActivity {
         }
 
 
-        ParseFile profileImageSource = ParseUser.getCurrentUser().getParseFile("profilePic");
-        if (image != null) {
+        ParseFile profileImageSource = post.getUser().getParseFile("profilePic");
+        if (profileImageSource != null) {
             Glide.with(this).load(profileImageSource.getUrl()).centerCrop().circleCrop().into(binding.profileImage);
         }else {
             Glide.with(this).load(R.drawable.placeholder).centerCrop().circleCrop().into(binding.profileImage);

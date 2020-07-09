@@ -63,19 +63,23 @@ public class ProfileFragment extends Fragment {
         binding.postsRV.setAdapter(postProfileAdapter);
         binding.postsRV.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
+        try {
+            if (user.getString("screenName") == null || user.getString("screenName").trim().equals("")) {
+                binding.textViewScreenName.setText(user.getString("screenName"));
+                binding.textViewUsername.setText(user.getUsername());
+            } else {
+                binding.textViewScreenName.setText(user.getUsername());
+            }
 
-        if(user.getString("screenName")!= null || user.getString("screenName").isEmpty()){
-            binding.textViewScreenName.setText(user.getString("screenName"));
-            binding.textViewUsername.setText(user.getUsername());
-        } else{
-            binding.textViewScreenName.setText(user.getUsername());
+            ParseFile image = user.getParseFile("profilePic");
+            if (image != null) {
+                Glide.with(this).load(image.getUrl()).centerCrop().circleCrop().into(binding.profileImage);
+            } else {
+                Glide.with(this).load(R.drawable.placeholder).circleCrop().into(binding.profileImage);
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error: " + e);
         }
-
-        ParseFile image = user.getParseFile("profilePic");
-        if (image != null) {
-            Glide.with(getContext()).load(image.getUrl()).centerCrop().circleCrop().into(binding.profileImage);
-        }
-
         queryPosts();
         pullRefresh();
     }
