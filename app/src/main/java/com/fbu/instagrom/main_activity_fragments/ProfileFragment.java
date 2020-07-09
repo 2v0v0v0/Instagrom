@@ -1,11 +1,12 @@
-package com.fbu.instagrom.fragments;
+package com.fbu.instagrom.main_activity_fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
@@ -13,39 +14,43 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.fbu.instagrom.R;
+import com.fbu.instagrom.activities.MainActivity;
+import com.fbu.instagrom.activities.SetProfilePicActivity;
+import com.fbu.instagrom.adapters.PostProfileAdapter;
+import com.fbu.instagrom.databinding.FragmentProfileBinding;
 import com.fbu.instagrom.models.Post;
-import com.fbu.instagrom.adapters.PostsAdapter;
-import com.fbu.instagrom.databinding.FragmentPostsBinding;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PostsFragment extends Fragment {
+public class ProfileFragment extends Fragment {
     private static final String TAG = "PostsFragment";
     private SwipeRefreshLayout swipeContainer;
-    FragmentPostsBinding binding;
-    protected PostsAdapter postsAdapter;
-    protected List<Post> allPosts;
+    private FragmentProfileBinding binding;
+    private PostProfileAdapter postProfileAdapter;
+    private List<Post> allPosts;
+    private ParseUser user = ParseUser.getCurrentUser();
 
-    public PostsFragment() {
+    public ProfileFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentPostsBinding.inflate(getLayoutInflater(), container, false);
-        // layout of fragment is stored in a special property called root
+        binding = FragmentProfileBinding.inflate(getLayoutInflater(), container, false);
         View view = binding.getRoot();
-        // binding.
 
         swipeContainer = binding.swipeContainer;
         return view;
@@ -55,19 +60,31 @@ public class PostsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-        //Steps to use for recycler view
-        //* 0. create layout for one row in the list
-        //* 1. create the adapter
-        //* 2. create the data source
-        //* 3. set the adapter on the recycler view
-        //* 4. set the layout manager on th RV
         allPosts = new ArrayList<>();
-        postsAdapter = new PostsAdapter(getContext(), allPosts);
-        binding.postsRV.setAdapter(postsAdapter);
-        binding.postsRV.setLayoutManager(new LinearLayoutManager(getContext()));
-        queryPosts();
+        postProfileAdapter = new PostProfileAdapter(getContext(), allPosts);
+        binding.postsRV.setAdapter(postProfileAdapter);
+        binding.postsRV.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
+        try {
+            if (user.getString("screenName") == null || user.getString("screenName").trim().equals("")) {
+                binding.textViewScreenName.setText(user.getString("screenName"));
+                binding.textViewUsername.setText(user.getUsername());
+            } else {
+                binding.textViewScreenName.setText(user.getUsername());
+            }
+
+            ParseFile image = user.getParseFile("profilePic");
+            if (image != null) {
+                Glide.with(this).load(image.getUrl()).centerCrop().circleCrop().into(binding.profileImage);
+            } else {
+                Glide.with(this).load(R.drawable.placeholder).circleCrop().into(binding.profileImage);
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error: " + e);
+        }
+
+        goToSetProfile();
+        queryPosts();
         pullRefresh();
     }
 
@@ -77,9 +94,10 @@ public class PostsFragment extends Fragment {
         binding = null;
     }
 
-    protected void queryPosts() {
+    private void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
+        query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
         query.setLimit(20);
         query.addDescendingOrder(Post.KEY_CREATEDAT);
         query.findInBackground(new FindCallback<Post>() {
@@ -94,12 +112,12 @@ public class PostsFragment extends Fragment {
                     Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
                 }
                 allPosts.addAll(posts);
-                postsAdapter.notifyDataSetChanged();
+                postProfileAdapter.notifyDataSetChanged();
             }
         });
     }
 
-    protected void pullRefresh() {
+    private void pullRefresh() {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -117,4 +135,16 @@ public class PostsFragment extends Fragment {
                 R.color.jasmine,
                 R.color.vividCerise);
     }
+
+    private void goToSetProfile (){
+        binding.setProfilePicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), SetProfilePicActivity.class);
+                startActivity(i);
+            }
+        });
+    }
+
 }
+

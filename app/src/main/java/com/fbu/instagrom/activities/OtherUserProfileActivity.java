@@ -28,6 +28,7 @@ import java.util.List;
 
 public class OtherUserProfileActivity extends AppCompatActivity {
     private static final String TAG = "OtherUserProfile";
+    private ActivityOtherUserProfileBinding binding;
     private PostProfileAdapter postProfileAdapter;
     private List<Post> userPosts;
     private ParseUser user;
@@ -35,7 +36,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final ActivityOtherUserProfileBinding binding = ActivityOtherUserProfileBinding.inflate(getLayoutInflater());
+        binding = ActivityOtherUserProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
 
@@ -110,4 +111,14 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         finish();
         return super.onOptionsItemSelected(item);
     }
+
+    /*private void goToSetProfile (){
+        binding.setProfilePicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(this, SetProfilePicActivity.class);
+                startActivity(i);
+            }
+        });
+    }*/
 }

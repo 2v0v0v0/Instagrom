@@ -1,25 +1,20 @@
 package com.fbu.instagrom.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.fbu.instagrom.R;
-import com.fbu.instagrom.activities.MainActivity;
 import com.fbu.instagrom.activities.OtherUserProfileActivity;
 import com.fbu.instagrom.activities.PostDetailsActivity;
-import com.fbu.instagrom.fragments.ProfileFragment;
 import com.fbu.instagrom.models.Post;
 import com.fbu.instagrom.models.RelativeTime;
 import com.parse.ParseFile;

@@ -1,4 +1,4 @@
-package com.fbu.instagrom.fragments;
+package com.fbu.instagrom.main_activity_fragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -55,8 +55,6 @@ public class ComposeFragment extends Fragment {
         // Required empty public constructor
     }
 
-
-    // The onCreateView method is called when Fragment should create its View object hierarchy
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,8 +65,6 @@ public class ComposeFragment extends Fragment {
         return view;
     }
 
-    // This event is triggered soon after onCreateView().
-    // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -85,8 +81,7 @@ public class ComposeFragment extends Fragment {
         binding.galleryImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Gallery coming soon", Toast.LENGTH_SHORT).show();
-                //onPickPhoto(view);
+                onPickPhoto(view);
             }
         });
 
@@ -95,12 +90,12 @@ public class ComposeFragment extends Fragment {
             public void onClick(View view) {
                 String description = binding.descriptionEditText.getText().toString();
                 //check if description empty
-                if (description.isEmpty()){
+                if (description.isEmpty()) {
                     Toast.makeText(getContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 //check if photofile empty
-                if (photoFile == null || postImage.getDrawable() == null){
+                if (photoFile == null || postImage.getDrawable() == null) {
                     Toast.makeText(getContext(), "There is no image!", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -112,7 +107,8 @@ public class ComposeFragment extends Fragment {
 
     }
 
-    @Override public void onDestroyView() {
+    @Override
+    public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
@@ -137,7 +133,23 @@ public class ComposeFragment extends Fragment {
         }
     }
 
-    /*public void onPickPhoto(View view) {
+    // Returns the File for a photo stored on disk given the fileName
+    public File getPhotoFileUri(String fileName) {
+        // Get safe storage directory for photos
+        // Use `getExternalFilesDir` on Context to access package-specific directories.
+        // This way, we don't need to request external read/write runtime permissions.
+        File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
+            Log.d(TAG, "failed to create directory");
+        }
+
+        // Return the file target for the photo based on filename
+        return new File(mediaStorageDir.getPath() + File.separator + fileName);
+    }
+
+    public void onPickPhoto(View view) {
         // Create intent for picking a photo from the gallery
         Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -163,22 +175,6 @@ public class ComposeFragment extends Fragment {
             e.printStackTrace();
         }
         return image;
-    }*/
-
-    // Returns the File for a photo stored on disk given the fileName
-    public File getPhotoFileUri(String fileName) {
-        // Get safe storage directory for photos
-        // Use `getExternalFilesDir` on Context to access package-specific directories.
-        // This way, we don't need to request external read/write runtime permissions.
-        File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
-
-        // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
-            Log.d(TAG, "failed to create directory");
-        }
-
-        // Return the file target for the photo based on filename
-        return new File(mediaStorageDir.getPath() + File.separator + fileName);
     }
 
     @Override
@@ -196,7 +192,7 @@ public class ComposeFragment extends Fragment {
             }
         }
 
-        /*if ((data != null) && requestCode == GALLERY_REQUEST_CODE) {
+        if ((data != null) && requestCode == GALLERY_REQUEST_CODE) {
             Uri photoUri = data.getData();
             photoFile= new File(photoUri.getPath());
             // Load the image located at photoUri into selectedImage
@@ -205,7 +201,7 @@ public class ComposeFragment extends Fragment {
             postImage.setImageBitmap(selectedImage);
         }else { // Result was a failure
             Toast.makeText(getContext(), "Picture wasn't selected!", Toast.LENGTH_SHORT).show();
-        }*/
+        }
     }
 
     private void savePost(String description, ParseUser currentUser, File photoFile) {
@@ -216,7 +212,7 @@ public class ComposeFragment extends Fragment {
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if (e!= null){
+                if (e != null) {
                     Log.e(TAG, "Error while saving", e);
                     Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
                 }

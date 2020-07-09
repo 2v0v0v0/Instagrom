@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ComposeFragment">
+    tools:context=".main_activity_fragments.ComposeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +28,6 @@
                 android:id="@+id/captureImageButton"
                 style="@style/roundInstaButton"
                 android:backgroundTint="@color/cardview_shadow_start_color"
-                android:layout_marginEnd="10dp"
                 android:layout_weight=".2"
                 android:layout_marginTop="20dp"
                 android:text="@string/camera" />
@@ -36,9 +35,10 @@
                 android:id="@+id/galleryImageButton"
                 style="@style/roundInstaButton"
                 android:backgroundTint="@color/cardview_shadow_start_color"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight=".2"
+                android:visibility="gone"
                 android:text="@string/gallery" />
         </LinearLayout>
 

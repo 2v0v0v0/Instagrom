@@ -1,7 +1,6 @@
 package com.fbu.instagrom.activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -14,11 +13,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.fbu.instagrom.R;
-import com.fbu.instagrom.activities.LoginActivity;
 import com.fbu.instagrom.databinding.ActivityMainBinding;
-import com.fbu.instagrom.fragments.ComposeFragment;
-import com.fbu.instagrom.fragments.PostsFragment;
-import com.fbu.instagrom.fragments.ProfileFragment;
+import com.fbu.instagrom.main_activity_fragments.ComposeFragment;
+import com.fbu.instagrom.main_activity_fragments.PostsFragment;
+import com.fbu.instagrom.main_activity_fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseUser;
 
