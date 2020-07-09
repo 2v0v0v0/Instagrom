@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -37,6 +38,7 @@ import java.util.List;
  */
 public class ProfileFragment extends Fragment {
     private static final String TAG = "PostsFragment";
+    private static final int SET_PROFILE_REQUEST_CODE = 99;
     private SwipeRefreshLayout swipeContainer;
     private FragmentProfileBinding binding;
     private PostProfileAdapter postProfileAdapter;
@@ -142,10 +144,23 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getContext(), SetProfilePicActivity.class);
-                getActivity().startActivity(i);
+                startActivityForResult(i,SET_PROFILE_REQUEST_CODE);
             }
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SET_PROFILE_REQUEST_CODE) {
+            Log.i(TAG, "return to profile");
+            ParseFile image = user.getParseFile("profilePic");
+            if (image != null) {
+                Glide.with(this).load(image.getUrl()).centerCrop().circleCrop().into(binding.profileImage);
+            } else {
+                Glide.with(this).load(R.drawable.placeholder).circleCrop().into(binding.profileImage);
+            }
+        }
+    }
 }
 

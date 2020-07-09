@@ -20,6 +20,7 @@ import com.fbu.instagrom.models.RelativeTime;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -58,6 +59,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private TextView descriptionTextView;
         private TextView timeStampTextView;
         private ImageView profileImageIV;
+        private ImageView heartButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +68,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
             timeStampTextView = itemView.findViewById(R.id.timeStampTextView);
             profileImageIV = itemView.findViewById(R.id.profileImage);
+            heartButton = itemView.findViewById(R.id.heartAction);
 
             itemView.setOnClickListener(this);
         }
@@ -90,6 +93,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             }
 
             setOnClickProfile();
+            setOnClickLike();
         }
 
         @Override
@@ -127,6 +131,22 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             Intent intent = new Intent(context, OtherUserProfileActivity.class);
             intent.putExtra("clickedOnProfile", Parcels.wrap(user));
             context.startActivity(intent);
+        }
+
+        private void setOnClickLike() {
+            heartButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    /*JSONArray myArray = new JSONArray();
+                    myArray.put(ParseUser.getCurrentUser().getObjectId());
+                    int position = getAdapterPosition();
+                    Post likedPost = listPosts.get(position);
+                    likedPost.put("likes", myArray);
+                    likedPost.saveInBackground();*/
+                }
+            });
+
+
         }
 
     }

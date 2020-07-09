@@ -5,9 +5,11 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
 import org.parceler.Parcel;
 
 import java.util.Date;
+import java.util.List;
 
 @ParseClassName("Post")
 @Parcel(analyze = Post.class)
@@ -16,8 +18,10 @@ public class Post extends ParseObject {
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
     public static final String KEY_CREATEDAT = "createdAt";
+    public static final String KEY_LIKES = "likes";
 
-    public Post(){}
+    public Post() {
+    }
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
@@ -35,6 +39,7 @@ public class Post extends ParseObject {
         return getCreatedAt();
     }
 
+
     public void setImage(ParseFile parseFile) {
         put(KEY_IMAGE, parseFile);
     }
@@ -47,4 +52,21 @@ public class Post extends ParseObject {
         put(KEY_USER, user);
     }
 
+//TODO: like feature
+    public JSONArray getLikes() {
+        if (getJSONArray(KEY_LIKES) == null){
+            JSONArray emptyArray = new JSONArray();
+            put("likes", emptyArray);
+            saveInBackground();
+        }
+        return getJSONArray(KEY_LIKES);
+    }
+
+    public void addLikes(String userId){
+
+    }
+
+    public boolean likedByUser(String userId, JSONArray likeList){
+     return false;
+    }
 }
