@@ -2,6 +2,7 @@
     <string name="app_name">Instagrom</string>
     <string name="descriptionHint">Description...</string>
     <string name="login">Log In</string>
+    <string name="loginFail">Login failed: Invalid username or password.</string>
     <string name="signup">Sign Up</string>
     <string name="usernameHint">Username</string>
     <string name="passwordhint">Password</string>

@@ -42,14 +42,14 @@ import static android.app.Activity.RESULT_OK;
  */
 //TODO: implement gallery function
 public class ComposeFragment extends Fragment {
-    public static final String TAG = "ComposeFragment";
-    public static final int CAMERA_REQUEST_CODE = 45;
-    public final static int GALLERY_REQUEST_CODE = 46;
+    private static final String TAG = "ComposeFragment";
+    private final static int CAMERA_REQUEST_CODE = 45;
+    private final static int GALLERY_REQUEST_CODE = 46;
     private EditText editTextDescription;
     private ImageView postImage;
-    FragmentComposeBinding binding;
+    private FragmentComposeBinding binding;
     private File photoFile;
-    public String photoFileName = "photo.jpg";
+    private String photoFileName = "photo.jpg";
 
     public ComposeFragment() {
         // Required empty public constructor

@@ -8,18 +8,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.fbu.instagrom.R;
 import com.fbu.instagrom.databinding.ActivityLoginBinding;
+import com.google.android.material.snackbar.Snackbar;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
+    private ActivityLoginBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
 
@@ -33,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i(TAG, "onClick login button");
                 String username = binding.usernameEditText.getText().toString();
                 String password = binding.passwordEditText.getText().toString();
-                loginUser(username, password);
+                loginUser(username, password, view);
             }
         });
 
@@ -46,14 +49,17 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void loginUser(String name, String password){
+    private void loginUser(String name, String password, final View v){
         Log.i(TAG, "Attempting to login user: " + name);
 
         ParseUser.logInInBackground(name, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
                 if(e != null){
-                    //TODO: better exception outputs
+                    Snackbar snackbar = Snackbar.make(v , R.string.loginFail, Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    binding.passwordEditText.setError("Invalid password");
+                    binding.usernameEditText.setError("Invalid username");
                     Log.e(TAG, "Issue with login", e);
                     return;
                 }

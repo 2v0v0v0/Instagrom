@@ -3,8 +3,11 @@ package com.fbu.instagrom.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -89,5 +92,22 @@ public class OtherUserProfileActivity extends AppCompatActivity {
                 postProfileAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_logout, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        ParseUser.logOut();
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        Log.i(TAG, currentUser == null ? "Log out success" : "Log out fail");
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+        finish();
+        return super.onOptionsItemSelected(item);
     }
 }
