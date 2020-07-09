@@ -43,9 +43,7 @@ public class PostsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentPostsBinding.inflate(getLayoutInflater(), container, false);
-        // layout of fragment is stored in a special property called root
         View view = binding.getRoot();
-        // binding.
 
         swipeContainer = binding.swipeContainer;
         return view;
@@ -55,19 +53,12 @@ public class PostsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-        //Steps to use for recycler view
-        //* 0. create layout for one row in the list
-        //* 1. create the adapter
-        //* 2. create the data source
-        //* 3. set the adapter on the recycler view
-        //* 4. set the layout manager on th RV
         allPosts = new ArrayList<>();
         postsAdapter = new PostsAdapter(getContext(), allPosts);
         binding.postsRV.setAdapter(postsAdapter);
         binding.postsRV.setLayoutManager(new LinearLayoutManager(getContext()));
-        queryPosts();
 
+        queryPosts();
         pullRefresh();
     }
 

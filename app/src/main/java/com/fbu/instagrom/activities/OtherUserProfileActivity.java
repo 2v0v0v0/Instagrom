@@ -71,6 +71,13 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.d(TAG, "Error: " + e);
         }
+
+        binding.setProfilePicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToSetProfile();
+            }
+        });
     }
 
     private void queryPosts() {
@@ -112,13 +119,8 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*private void goToSetProfile (){
-        binding.setProfilePicButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(this, SetProfilePicActivity.class);
-                startActivity(i);
-            }
-        });
-    }*/
+    private void goToSetProfile (){
+        Intent i = new Intent(this, SetProfilePicActivity.class);
+        startActivity(i);
+    }
 }

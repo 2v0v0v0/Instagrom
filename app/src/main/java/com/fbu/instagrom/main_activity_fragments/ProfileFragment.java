@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.fbu.instagrom.R;
 import com.fbu.instagrom.activities.MainActivity;
+import com.fbu.instagrom.activities.PostDetailsActivity;
 import com.fbu.instagrom.activities.SetProfilePicActivity;
 import com.fbu.instagrom.adapters.PostProfileAdapter;
 import com.fbu.instagrom.databinding.FragmentProfileBinding;
@@ -141,7 +142,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getContext(), SetProfilePicActivity.class);
-                startActivity(i);
+                getActivity().startActivity(i);
             }
         });
     }
