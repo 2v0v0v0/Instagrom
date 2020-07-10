@@ -17,7 +17,7 @@ public class Post extends ParseObject {
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
     public static final String KEY_CREATEDAT = "createdAt";
-    public static final String KEY_LIKES = "likes";
+    public static final String KEY_COMMENTS = "comments";
 
     public Post() {
     }
@@ -26,12 +26,24 @@ public class Post extends ParseObject {
         return getString(KEY_DESCRIPTION);
     }
 
+    public void setDescription(String description) {
+        put(KEY_DESCRIPTION, description);
+    }
+
     public ParseFile getImage() {
         return getParseFile(KEY_IMAGE);
     }
 
+    public void setImage(ParseFile parseFile) {
+        put(KEY_IMAGE, parseFile);
+    }
+
     public ParseUser getUser() {
         return getParseUser(KEY_USER);
+    }
+
+    public void setUser(ParseUser user) {
+        put(KEY_USER, user);
     }
 
     public Date getTime() {
@@ -39,33 +51,4 @@ public class Post extends ParseObject {
     }
 
 
-    public void setImage(ParseFile parseFile) {
-        put(KEY_IMAGE, parseFile);
-    }
-
-    public void setDescription(String description) {
-        put(KEY_DESCRIPTION, description);
-    }
-
-    public void setUser(ParseUser user) {
-        put(KEY_USER, user);
-    }
-
-//TODO: like feature
-    public JSONArray getLikes() {
-        if (getJSONArray(KEY_LIKES) == null){
-            JSONArray emptyArray = new JSONArray();
-            put("likes", emptyArray);
-            saveInBackground();
-        }
-        return getJSONArray(KEY_LIKES);
-    }
-
-    public void addLikes(String userId){
-
-    }
-
-    public boolean likedByUser(String userId, JSONArray likeList){
-     return false;
-    }
 }
