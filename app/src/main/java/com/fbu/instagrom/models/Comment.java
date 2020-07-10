@@ -14,8 +14,8 @@ import java.util.Date;
 public class Comment extends ParseObject {
     public static final String KEY_TEXT = "text";
     public static final String KEY_USER = "user";
-    public static final String KEY_CREATEDAT = "createdAt";
     public static final String KEY_POST = "post";
+    public static final String KEY_CREATEDAT = "createdAt";
 
     public String getText() throws ParseException {
         return fetchIfNeeded().getString(KEY_TEXT);
@@ -33,15 +33,15 @@ public class Comment extends ParseObject {
         put(KEY_USER, user);
     }
 
-    public Date getTime() {
-        return getCreatedAt();
-    }
-
     public ParseObject getPost() throws ParseException{
         return getParseObject(KEY_POST).fetchIfNeeded();
     }
 
     public void setPost (Post post){
         put(KEY_POST, post);
+    }
+
+    public Date getTime() {
+        return getCreatedAt();
     }
 }

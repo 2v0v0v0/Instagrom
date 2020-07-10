@@ -8,6 +8,7 @@ import com.parse.ParseUser;
 import org.json.JSONArray;
 import org.parceler.Parcel;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 @ParseClassName("Post")
@@ -50,5 +51,10 @@ public class Post extends ParseObject {
         return getCreatedAt();
     }
 
-
+    public ArrayList<Comment> getCommentList(){
+        return (ArrayList<Comment>)get(KEY_COMMENTS);
+    }
+    public void setComment(Comment comment){
+        add(KEY_COMMENTS,comment);
+    }
 }

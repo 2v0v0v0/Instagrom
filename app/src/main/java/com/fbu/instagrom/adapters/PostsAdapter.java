@@ -2,11 +2,13 @@ package com.fbu.instagrom.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,10 +17,13 @@ import com.bumptech.glide.Glide;
 import com.fbu.instagrom.R;
 import com.fbu.instagrom.activities.OtherUserProfileActivity;
 import com.fbu.instagrom.activities.PostDetailsActivity;
+import com.fbu.instagrom.models.Comment;
 import com.fbu.instagrom.models.Post;
 import com.fbu.instagrom.models.RelativeTime;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.parceler.Parcels;
@@ -60,6 +65,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private TextView timeStampTextView;
         private ImageView profileImageIV;
         private ImageView heartButton;
+        private ImageView commentButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,6 +75,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             timeStampTextView = itemView.findViewById(R.id.timeStampTextView);
             profileImageIV = itemView.findViewById(R.id.profileImage);
             heartButton = itemView.findViewById(R.id.heartAction);
+            commentButton = itemView.findViewById(R.id.commentAction);
 
             itemView.setOnClickListener(this);
         }
@@ -94,6 +101,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
             setOnClickProfile();
             setOnClickLike();
+            setOnClickComment();
         }
 
         @Override
@@ -145,8 +153,40 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     likedPost.saveInBackground();*/
                 }
             });
+        }
+
+        private void setOnClickComment (){
+            commentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    final Post commentedPost = listPosts.get(position);
+                    final Comment comment = new Comment();
+                    comment.setPost(commentedPost);
+                    comment.setText("comment comment");
+                    comment.setUser(ParseUser.getCurrentUser());
+                    comment.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null) {
+                                Log.e("comment button", "Error while saving comment", e);
+                            }
+                            commentedPost.setComment(comment);
+                            commentedPost.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e != null) {
+                                        Log.e("comment button", "Error while saving post", e);
+                                    }
+                                }
+                            });
+                        }
+                    });
 
 
+                    Log.i("PostAdapter","comment clicked" );
+                }
+            });
         }
 
     }
