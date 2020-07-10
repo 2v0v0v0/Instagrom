@@ -1,4 +1,4 @@
-package com.fbu.instagrom.main_activity_fragments;
+package com.fbu.instagrom.fragments;
 
 import android.os.Bundle;
 
@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.fbu.instagrom.EndlessRecyclerViewScrollListener;
 import com.fbu.instagrom.R;

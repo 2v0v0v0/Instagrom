@@ -1,4 +1,4 @@
-package com.fbu.instagrom.main_activity_fragments;
+package com.fbu.instagrom.fragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

@@ -1,4 +1,4 @@
-package com.fbu.instagrom.main_activity_fragments;
+package com.fbu.instagrom.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -17,8 +16,6 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.fbu.instagrom.R;
-import com.fbu.instagrom.activities.MainActivity;
-import com.fbu.instagrom.activities.PostDetailsActivity;
 import com.fbu.instagrom.activities.SetProfilePicActivity;
 import com.fbu.instagrom.adapters.PostProfileAdapter;
 import com.fbu.instagrom.databinding.FragmentProfileBinding;
@@ -70,10 +67,10 @@ public class ProfileFragment extends Fragment {
 
         try {
             if (user.getString("screenName") == null || user.getString("screenName").trim().equals("")) {
+                binding.textViewScreenName.setText(user.getUsername());
+            } else {
                 binding.textViewScreenName.setText(user.getString("screenName"));
                 binding.textViewUsername.setText(user.getUsername());
-            } else {
-                binding.textViewScreenName.setText(user.getUsername());
             }
 
             ParseFile image = user.getParseFile("profilePic");

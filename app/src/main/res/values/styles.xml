@@ -7,6 +7,17 @@
         <item name="colorAccent">@color/jasmine</item>
     </style>
 
+    <style name="appName" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:fontFamily">@font/croissant_one</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">@string/app_name</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="timelineText" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textColor">@color/gray</item>
         <item name="android:textSize">20sp</item>

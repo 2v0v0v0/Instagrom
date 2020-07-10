@@ -9,7 +9,6 @@ import org.json.JSONArray;
 import org.parceler.Parcel;
 
 import java.util.Date;
-import java.util.List;
 
 @ParseClassName("Post")
 @Parcel(analyze = Post.class)
