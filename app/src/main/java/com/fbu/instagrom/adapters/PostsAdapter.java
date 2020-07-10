@@ -11,12 +11,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.fbu.instagrom.R;
 import com.fbu.instagrom.activities.OtherUserProfileActivity;
 import com.fbu.instagrom.activities.PostDetailsActivity;
+import com.fbu.instagrom.fragments.CommentDialogFragment;
 import com.fbu.instagrom.models.Comment;
 import com.fbu.instagrom.models.Post;
 import com.fbu.instagrom.models.RelativeTime;
@@ -159,7 +162,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             commentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int position = getAdapterPosition();
+                    goToCommentDialog();
+                    /*int position = getAdapterPosition();
                     final Post commentedPost = listPosts.get(position);
                     final Comment comment = new Comment();
                     comment.setPost(commentedPost);
@@ -181,14 +185,18 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                                 }
                             });
                         }
-                    });
-
-
+                    });*/
                     Log.i("PostAdapter","comment clicked" );
                 }
             });
         }
 
+        private void goToCommentDialog(){
+            FragmentActivity activity = (FragmentActivity)(context);
+            FragmentManager fm = activity.getSupportFragmentManager();
+            CommentDialogFragment commentDialogFragment = new CommentDialogFragment();
+            commentDialogFragment.show(fm, "comment dialog");
+        }
     }
 
     public void clear() {

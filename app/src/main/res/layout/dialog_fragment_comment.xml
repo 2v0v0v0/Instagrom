@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="30dp"
+    android:background="#37E8E2E2"
     android:orientation="vertical"
     android:padding="10dp">
 
+    <ImageView
+        android:id="@+id/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
     <EditText
-        android:id="@+id/inMobile"
+        android:id="@+id/commentEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:layout_weight="1"
         android:hint="Add a comment..."
         android:inputType="text" />
 
     <Button
-        android:id="@+id/btnDone"
+        android:id="@+id/postButton"
         style="@style/roundInstaButton"
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight=".5"

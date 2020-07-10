@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.fbu.instagrom.R;
 import com.fbu.instagrom.databinding.ActivityMainBinding;
+import com.fbu.instagrom.fragments.CommentDialogFragment;
 import com.fbu.instagrom.fragments.ComposeFragment;
 import com.fbu.instagrom.fragments.PostsFragment;
 import com.fbu.instagrom.fragments.ProfileFragment;
