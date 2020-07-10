@@ -33,7 +33,10 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
@@ -52,7 +55,6 @@ public class ComposeFragment extends Fragment {
     private FragmentComposeBinding binding;
     private File photoFile;
     private String photoFileName = "photo.jpg";
-
 
 
     public ComposeFragment() {
@@ -172,7 +174,7 @@ public class ComposeFragment extends Fragment {
         Bitmap image = null;
         try {
             // check version of Android on device
-            if(Build.VERSION.SDK_INT > 27){
+            if (Build.VERSION.SDK_INT > 27) {
                 // on newer versions of Android, use the new decodeBitmap method
                 ImageDecoder.Source source = ImageDecoder.createSource(getContext().getContentResolver(), photoUri);
                 image = ImageDecoder.decodeBitmap(source);
@@ -196,22 +198,52 @@ public class ComposeFragment extends Fragment {
                 // RESIZE BITMAP, see section below
                 // Load the taken image into a preview
                 postImage.setImageBitmap(takenImage);
-            } else if (requestCode == CAMERA_REQUEST_CODE){
+            } else if (requestCode == CAMERA_REQUEST_CODE) {
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
 
         if ((data != null) && requestCode == GALLERY_REQUEST_CODE) {
             Uri photoUri = data.getData();
-            photoFile= new File(photoUri.getPath());
+
             // Load the image located at photoUri into selectedImage
             Bitmap selectedImage = loadFromUri(photoUri);
             // Load the selected image into a preview
             postImage.setImageBitmap(selectedImage);
-        }else if(requestCode == GALLERY_REQUEST_CODE) {
+//            bitmapToFile(selectedImage);
+        } else if (requestCode == GALLERY_REQUEST_CODE) {
             Toast.makeText(getContext(), "Picture wasn't selected!", Toast.LENGTH_SHORT).show();
         }
     }
+
+    /*public void bitmapToFile(Bitmap bitmap) {
+        //create a file to write bitmap data
+        File f = new File(getContext().getCacheDir(), photoFileName);
+        try {
+            f.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Convert bitmap to byte array
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0 *//*ignored for PNG*//*, bos);
+        byte[] bitmapdata = bos.toByteArray();
+
+        //write the bytes in file
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(f);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }*/
 
     private void savePost(String description, ParseUser currentUser, File photoFile) {
 

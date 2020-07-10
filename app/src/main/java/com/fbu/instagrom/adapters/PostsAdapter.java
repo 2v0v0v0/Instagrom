@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +35,7 @@ import org.parceler.Parcels;
 import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
+    private static final String TAG = "PostAdapter";
     private Context context;
     private List<Post> listPosts;
     public int REQUEST_CODE = 1002;
@@ -61,7 +63,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         return listPosts.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CommentDialogFragment.CommentDialogListener {
         private TextView usernameTextView;
         private ImageView imageIV;
         private TextView descriptionTextView;
@@ -69,6 +74,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private ImageView profileImageIV;
         private ImageView heartButton;
         private ImageView commentButton;
+        private String commentText = "";
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -163,39 +169,43 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 @Override
                 public void onClick(View view) {
                     goToCommentDialog();
-                    /*int position = getAdapterPosition();
-                    final Post commentedPost = listPosts.get(position);
-                    final Comment comment = new Comment();
-                    comment.setPost(commentedPost);
-                    comment.setText("comment comment");
-                    comment.setUser(ParseUser.getCurrentUser());
-                    comment.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e != null) {
-                                Log.e("comment button", "Error while saving comment", e);
-                            }
-                            commentedPost.setComment(comment);
-                            commentedPost.saveInBackground(new SaveCallback() {
-                                @Override
-                                public void done(ParseException e) {
-                                    if (e != null) {
-                                        Log.e("comment button", "Error while saving post", e);
-                                    }
-                                }
-                            });
-                        }
-                    });*/
                     Log.i("PostAdapter","comment clicked" );
                 }
             });
         }
 
         private void goToCommentDialog(){
-            FragmentActivity activity = (FragmentActivity)(context);
-            FragmentManager fm = activity.getSupportFragmentManager();
-            CommentDialogFragment commentDialogFragment = new CommentDialogFragment();
-            commentDialogFragment.show(fm, "comment dialog");
+            FragmentManager fm = ((AppCompatActivity) context).getSupportFragmentManager();
+            CommentDialogFragment editNameDialogFragment = CommentDialogFragment.newInstance(this);
+            editNameDialogFragment.show(fm, "Compose");
+        }
+
+        @Override
+        public void applyComment(String text) {
+            //commentText = text;
+            int position = getAdapterPosition();
+            final Post commentedPost = listPosts.get(position);
+            final Comment comment = new Comment();
+            comment.setPost(commentedPost);
+            comment.setText(text);
+            comment.setUser(ParseUser.getCurrentUser());
+            comment.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.e("comment button", "Error while saving comment", e);
+                    }
+                    commentedPost.setComment(comment);
+                    commentedPost.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null) {
+                                Log.e("comment button", "Error while saving post", e);
+                            }
+                        }
+                    });
+                }
+            });
         }
     }
 
