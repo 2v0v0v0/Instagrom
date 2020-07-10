@@ -1,6 +1,7 @@
 package com.fbu.instagrom.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,22 +11,26 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.fbu.instagrom.R;
 import com.fbu.instagrom.databinding.ItemPostBinding;
+import com.fbu.instagrom.fragments.CommentDialogFragment;
+import com.fbu.instagrom.models.Comment;
 import com.fbu.instagrom.models.Post;
 import com.fbu.instagrom.models.RelativeTime;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
-public class PostDetailsActivity extends AppCompatActivity {
+public class PostDetailsActivity extends AppCompatActivity implements CommentDialogFragment.CommentDialogListener {
     private static final String TAG = "PostDetailsActivity";
+    private ItemPostBinding binding;
     private Post post;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final ItemPostBinding binding = ItemPostBinding.inflate(getLayoutInflater());
+        binding  = ItemPostBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
 
@@ -60,6 +65,19 @@ public class PostDetailsActivity extends AppCompatActivity {
             Glide.with(this).load(R.drawable.placeholder).centerCrop().circleCrop().into(binding.profileImage);
         }
 
+
+        setOnClickListener();
+    }
+
+    private void setOnClickListener (){
+        binding.commentAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToCommentDialog();
+                Log.i("PostAdapter","comment clicked" );
+            }
+        });
+
         binding.usernameTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,5 +98,37 @@ public class PostDetailsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, OtherUserProfileActivity.class);
         intent.putExtra("clickedOnProfile", Parcels.wrap(user));
         startActivity(intent);
+    }
+
+    private void goToCommentDialog(){
+        CommentDialogFragment commentDialogFragment = new CommentDialogFragment();
+        commentDialogFragment.show(getSupportFragmentManager(), "comment dialog");
+    }
+
+    @Override
+    public void applyComment(String text) {
+        //commentText = text;
+        final Post commentedPost = post;
+        final Comment comment = new Comment();
+        comment.setPost(commentedPost);
+        comment.setText(text);
+        comment.setUser(ParseUser.getCurrentUser());
+        comment.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e("comment button", "Error while saving comment", e);
+                }
+                commentedPost.setComment(comment);
+                commentedPost.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.e("comment button", "Error while saving post", e);
+                        }
+                    }
+                });
+            }
+        });
     }
 }
