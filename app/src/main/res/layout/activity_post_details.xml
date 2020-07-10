@@ -93,6 +93,13 @@
             android:textAppearance="@style/descriptionStyle"
             tools:text="Description text" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/commentsRV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
     </LinearLayout>
 
 </RelativeLayout>
