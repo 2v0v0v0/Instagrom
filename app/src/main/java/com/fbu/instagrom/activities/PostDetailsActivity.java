@@ -12,6 +12,7 @@ import com.fbu.instagrom.R;
 import com.fbu.instagrom.databinding.ItemPostBinding;
 import com.fbu.instagrom.models.Post;
 import com.fbu.instagrom.models.RelativeTime;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -32,8 +33,13 @@ public class PostDetailsActivity extends AppCompatActivity {
         Log.d(TAG, String.format("Showing details for '%s'", post.getDescription()));
 
         binding.outer.setBackgroundColor(getResources().getColor(R.color.gray_tint));
-
-        binding.usernameTextView.setText(post.getUser().getUsername());
+        ParseUser user = post.getUser();
+        try {
+            user.fetchIfNeeded();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        binding.usernameTextView.setText(user.getUsername());
         binding.descriptionTextView.setText(post.getDescription());
 
         RelativeTime relativeTime = new RelativeTime();
