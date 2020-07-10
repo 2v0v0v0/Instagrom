@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
@@ -47,9 +48,12 @@ public class ComposeFragment extends Fragment {
     private final static int GALLERY_REQUEST_CODE = 46;
     private EditText editTextDescription;
     private ImageView postImage;
+    ProgressBar pb;
     private FragmentComposeBinding binding;
     private File photoFile;
     private String photoFileName = "photo.jpg";
+
+
 
     public ComposeFragment() {
         // Required empty public constructor
@@ -68,8 +72,10 @@ public class ComposeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        pb = (ProgressBar) binding.pbLoading;
         editTextDescription = view.findViewById(R.id.descriptionEditText);
         postImage = view.findViewById(R.id.postImage);
+
 
         binding.captureImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,15 +94,18 @@ public class ComposeFragment extends Fragment {
         binding.submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pb.setVisibility(ProgressBar.VISIBLE);
                 String description = binding.descriptionEditText.getText().toString();
                 //check if description empty
                 if (description.isEmpty()) {
                     Toast.makeText(getContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
+                    pb.setVisibility(ProgressBar.INVISIBLE);
                     return;
                 }
                 //check if photofile empty
                 if (photoFile == null || postImage.getDrawable() == null) {
                     Toast.makeText(getContext(), "There is no image!", Toast.LENGTH_SHORT).show();
+                    pb.setVisibility(ProgressBar.INVISIBLE);
                     return;
                 }
 
@@ -187,7 +196,7 @@ public class ComposeFragment extends Fragment {
                 // RESIZE BITMAP, see section below
                 // Load the taken image into a preview
                 postImage.setImageBitmap(takenImage);
-            } else { // Result was a failure
+            } else if (requestCode == CAMERA_REQUEST_CODE){
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
@@ -199,12 +208,13 @@ public class ComposeFragment extends Fragment {
             Bitmap selectedImage = loadFromUri(photoUri);
             // Load the selected image into a preview
             postImage.setImageBitmap(selectedImage);
-        }else { // Result was a failure
+        }else if(requestCode == GALLERY_REQUEST_CODE) {
             Toast.makeText(getContext(), "Picture wasn't selected!", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void savePost(String description, ParseUser currentUser, File photoFile) {
+
         Post post = new Post();
         post.setDescription(description);
         post.setImage(new ParseFile(photoFile));
@@ -219,6 +229,7 @@ public class ComposeFragment extends Fragment {
                 Log.i(TAG, "Post save was success!!");
                 editTextDescription.setText("");
                 postImage.setImageResource(0);
+                pb.setVisibility(ProgressBar.INVISIBLE);
             }
         });
     }
