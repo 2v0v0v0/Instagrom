@@ -63,9 +63,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         return listPosts.size();
     }
 
-
-
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CommentDialogFragment.CommentDialogListener {
         private TextView usernameTextView;
         private ImageView imageIV;

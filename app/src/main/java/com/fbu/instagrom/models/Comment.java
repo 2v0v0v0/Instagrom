@@ -25,8 +25,8 @@ public class Comment extends ParseObject {
         put(KEY_TEXT, text);
     }
 
-    public String getUser() {
-        return KEY_USER;
+    public ParseUser getUser() throws ParseException {
+        return getParseUser(KEY_USER).fetchIfNeeded();
     }
 
     public void setUser(ParseUser user) {

@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.fbu.instagrom.R;
+import com.fbu.instagrom.databinding.ActivityPostDetailsBinding;
 import com.fbu.instagrom.databinding.ItemPostBinding;
 import com.fbu.instagrom.fragments.CommentDialogFragment;
 import com.fbu.instagrom.models.Comment;
@@ -24,13 +25,13 @@ import org.parceler.Parcels;
 
 public class PostDetailsActivity extends AppCompatActivity implements CommentDialogFragment.CommentDialogListener {
     private static final String TAG = "PostDetailsActivity";
-    private ItemPostBinding binding;
+    private ActivityPostDetailsBinding binding;
     private Post post;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding  = ItemPostBinding.inflate(getLayoutInflater());
+        binding  = ActivityPostDetailsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
 

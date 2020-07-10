@@ -14,12 +14,13 @@
 
     <TextView
         android:id="@+id/usernametextView"
+        android:contentDescription="profile image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/profileImageView"
-        android:text="TextView"
+        tools:text="username"
         style="@style/descriptionStyle"
         android:textStyle="bold"/>
 
