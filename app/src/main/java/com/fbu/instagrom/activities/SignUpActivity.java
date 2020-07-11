@@ -102,6 +102,8 @@ public class SignUpActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     Log.i(TAG, "Sign up successful");
+                    goLoginActivity();
+                    Toast.makeText(SignUpActivity.this, "Login to your new account!", Toast.LENGTH_LONG).show();
                 } else {
 
                     switch (e.getCode()) {
@@ -120,13 +122,14 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 }
 
-                goLoginActivity();
-                Toast.makeText(SignUpActivity.this, "Login to your new account!", Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private void goLoginActivity() {
+        ParseUser.logOut();
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        Log.i(TAG, currentUser == null ? "Log out success" : "Log out fail");
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
         finish();
