@@ -42,4 +42,11 @@
         android:layout_toEndOf="@+id/profileImageView"
         tools:text="2h" />
 
+    <View
+        android:layout_below="@+id/timeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:background="@android:color/darker_gray" />
+
 </RelativeLayout>

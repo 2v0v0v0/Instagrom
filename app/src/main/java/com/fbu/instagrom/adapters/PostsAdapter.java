@@ -173,8 +173,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         private void goToCommentDialog(){
             FragmentManager fm = ((AppCompatActivity) context).getSupportFragmentManager();
-            CommentDialogFragment editNameDialogFragment = CommentDialogFragment.newInstance(this);
-            editNameDialogFragment.show(fm, "Compose");
+            CommentDialogFragment commentDialogFragment = CommentDialogFragment.newInstance(this);
+            commentDialogFragment.show(fm, "Compose");
         }
 
         @Override

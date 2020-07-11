@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.fbu.instagrom.EndlessRecyclerViewScrollListener;
 import com.fbu.instagrom.R;
+import com.fbu.instagrom.models.Comment;
 import com.fbu.instagrom.models.Post;
 import com.fbu.instagrom.adapters.PostsAdapter;
 import com.fbu.instagrom.databinding.FragmentPostsBinding;
@@ -96,7 +97,7 @@ public class PostsFragment extends Fragment {
     protected void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-        query.include(Post.KEY_COMMENTS);
+        query.include(Post.KEY_COMMENTS).addDescendingOrder(Comment.KEY_CREATEDAT);
         query.setLimit(5);
         query.addDescendingOrder(Post.KEY_CREATEDAT);
         query.findInBackground(new FindCallback<Post>() {

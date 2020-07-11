@@ -210,13 +210,13 @@ public class ComposeFragment extends Fragment {
             Bitmap selectedImage = loadFromUri(photoUri);
             // Load the selected image into a preview
             postImage.setImageBitmap(selectedImage);
-//            bitmapToFile(selectedImage);
+            photoFile = bitmapToFile(selectedImage);
         } else if (requestCode == GALLERY_REQUEST_CODE) {
             Toast.makeText(getContext(), "Picture wasn't selected!", Toast.LENGTH_SHORT).show();
         }
     }
 
-    /*public void bitmapToFile(Bitmap bitmap) {
+    public File bitmapToFile(Bitmap bitmap) {
         //create a file to write bitmap data
         File f = new File(getContext().getCacheDir(), photoFileName);
         try {
@@ -227,7 +227,7 @@ public class ComposeFragment extends Fragment {
 
         //Convert bitmap to byte array
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0 *//*ignored for PNG*//*, bos);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
         byte[] bitmapdata = bos.toByteArray();
 
         //write the bytes in file
@@ -243,7 +243,8 @@ public class ComposeFragment extends Fragment {
             e.printStackTrace();
         }
 
-    }*/
+        return f;
+    }
 
     private void savePost(String description, ParseUser currentUser, File photoFile) {
 

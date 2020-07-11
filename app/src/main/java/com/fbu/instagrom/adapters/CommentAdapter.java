@@ -14,6 +14,7 @@ import com.fbu.instagrom.databinding.ItemCommentsBinding;
 import com.fbu.instagrom.databinding.ItemPostBinding;
 import com.fbu.instagrom.models.Comment;
 import com.fbu.instagrom.models.Post;
+import com.fbu.instagrom.models.RelativeTime;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
@@ -63,6 +64,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         public void bind(Comment comment) throws ParseException {
             binding.commentBodyTextView.setText(comment.getText());
             binding.usernametextView.setText(comment.getUser().getUsername());
+            RelativeTime relativeTime = new RelativeTime();
+            binding.timeTextView.setText(relativeTime.getRelativeTimeAgo(comment.getTime()));
         }
     }
 }

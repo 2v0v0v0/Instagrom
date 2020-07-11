@@ -32,6 +32,7 @@ public class PostDetailsActivity extends AppCompatActivity implements CommentDia
     private static final String TAG = "PostDetailsActivity";
     private ActivityPostDetailsBinding binding;
     private Post post;
+    private CommentDialogFragment commentDialogFragment;
     private CommentAdapter adapter;
     private RecyclerView commentsRV;
     private List<Comment> listComments;
@@ -78,6 +79,7 @@ public class PostDetailsActivity extends AppCompatActivity implements CommentDia
 
         //Setting up the recycler view for comments
         listComments = new ArrayList<>();
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         adapter = new CommentAdapter(PostDetailsActivity.this, listComments);
         commentsRV = findViewById(R.id.commentsRV);
@@ -119,13 +121,12 @@ public class PostDetailsActivity extends AppCompatActivity implements CommentDia
     }
 
     private void goToCommentDialog() {
-        CommentDialogFragment commentDialogFragment = new CommentDialogFragment();
+        commentDialogFragment = CommentDialogFragment.newInstance(this);
         commentDialogFragment.show(getSupportFragmentManager(), "comment dialog");
     }
 
     @Override
     public void applyComment(String text) {
-        //commentText = text;
         final Post commentedPost = post;
         final Comment comment = new Comment();
         comment.setPost(commentedPost);
@@ -148,7 +149,7 @@ public class PostDetailsActivity extends AppCompatActivity implements CommentDia
                 });
             }
         });
-
+        commentDialogFragment.dismiss();
         listComments.clear();
         listComments.addAll(post.getCommentList());
         adapter.notifyDataSetChanged();
