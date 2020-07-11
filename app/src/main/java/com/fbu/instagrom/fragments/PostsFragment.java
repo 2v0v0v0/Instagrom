@@ -97,8 +97,8 @@ public class PostsFragment extends Fragment {
     protected void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-        query.include(Post.KEY_COMMENTS).addDescendingOrder(Comment.KEY_CREATEDAT);
-        query.setLimit(5);
+        query.include(Post.KEY_COMMENTS);
+        query.setLimit(10);
         query.addDescendingOrder(Post.KEY_CREATEDAT);
         query.findInBackground(new FindCallback<Post>() {
             @Override
@@ -121,7 +121,7 @@ public class PostsFragment extends Fragment {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.whereLessThan(Post.KEY_CREATEDAT,allPosts.get(allPosts.size()-1).getCreatedAt());
         query.include(Post.KEY_USER);
-        query.setLimit(5);
+        query.setLimit(10);
         query.addDescendingOrder(Post.KEY_CREATEDAT);
         query.findInBackground(new FindCallback<Post>() {
             @Override

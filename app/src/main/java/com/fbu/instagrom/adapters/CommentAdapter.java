@@ -3,20 +3,15 @@ package com.fbu.instagrom.adapters;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fbu.instagrom.R;
 import com.fbu.instagrom.databinding.ItemCommentsBinding;
-import com.fbu.instagrom.databinding.ItemPostBinding;
 import com.fbu.instagrom.models.Comment;
-import com.fbu.instagrom.models.Post;
 import com.fbu.instagrom.models.RelativeTime;
 import com.parse.ParseException;
-import com.parse.ParseUser;
 
 import java.util.List;
 
