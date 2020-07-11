@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.fbu.instagrom.R;
@@ -32,6 +33,7 @@ public class PostDetailsActivity extends AppCompatActivity implements CommentDia
     private static final String TAG = "PostDetailsActivity";
     private ActivityPostDetailsBinding binding;
     private Post post;
+    private ProgressBar pb;
     private CommentDialogFragment commentDialogFragment;
     private CommentAdapter adapter;
     private RecyclerView commentsRV;
@@ -47,6 +49,7 @@ public class PostDetailsActivity extends AppCompatActivity implements CommentDia
         post = (Post) Parcels.unwrap(getIntent().getParcelableExtra(Post.class.getSimpleName()));
         Log.d(TAG, String.format("Showing details for '%s'", post.getDescription()));
         binding.outer.setBackgroundColor(getResources().getColor(R.color.gray_tint));
+        pb = (ProgressBar) binding.pbLoading;
         //Setup Post
         ParseUser user = post.getUser();
         try {
@@ -127,6 +130,7 @@ public class PostDetailsActivity extends AppCompatActivity implements CommentDia
 
     @Override
     public void applyComment(String text) {
+        pb.setVisibility(View.VISIBLE);
         final Post commentedPost = post;
         final Comment comment = new Comment();
         comment.setPost(commentedPost);
@@ -147,6 +151,7 @@ public class PostDetailsActivity extends AppCompatActivity implements CommentDia
                         }
                     }
                 });
+                pb.setVisibility(View.INVISIBLE);
             }
         });
         commentDialogFragment.dismiss();

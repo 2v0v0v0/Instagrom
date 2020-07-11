@@ -96,10 +96,15 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/commentsRV"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="80dp"
+        android:visibility="invisible" />
 
 </RelativeLayout>
