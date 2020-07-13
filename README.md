@@ -46,11 +46,12 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
+Full Demo: https://drive.google.com/file/d/1DaHJ8WAJRRKSbf31zIz5WiZz84xb-hSm/view?usp=sharing
+
 <img src='demo/demo1.gif' />
 <img src='demo/demo2.gif'/>
 <img src='demo/demo3.gif'/>
 
-Full Demo: https://github.com/2v0v0v0/Instagrom/blob/master/demo/InstagromDemo.mp4
 
 InstagromDemo.mp4
 
