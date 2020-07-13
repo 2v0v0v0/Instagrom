@@ -2,7 +2,7 @@
 
 **Instagrom** is a photo sharing app using Parse as its backend.
 
-Time spent: **X** hours spent in total
+Time spent: **60** hours spent in total
 
 ## User Stories
 
@@ -46,9 +46,11 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<video width="320" height="240" controls>
-  <source src="InstagromDemo.mp4" type="video/mp4">
-</video>
+<img src='demo/demo1.gif' />
+<img src='demo/demo2.gif'/>
+<img src='demo/demo3.gif'/>
+
+Full Demo: https://github.com/2v0v0v0/Instagrom/blob/master/demo/InstagromDemo.mp4
 
 InstagromDemo.mp4
 
@@ -67,7 +69,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [202] [Thu Vo]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
